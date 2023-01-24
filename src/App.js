@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import logo from './logo.svg';
+import CardList from './components/card-list/card-list.component';
 import './App.css';
+
 
 class App extends Component {
   
@@ -11,11 +12,9 @@ class App extends Component {
       characters: [],
       searchField: '',
     };
-    console.log('constructor here');
   }
 
   componentDidMount() {
-    console.log('component did mount here');
     fetch('https://jsonplaceholder.typicode.com/users')
     .then(response => response.json())
     .then((users) => this.setState(() => {
@@ -23,7 +22,7 @@ class App extends Component {
     }
     ,
     () => {
-      console.log(this.state)
+      //callback stuff goes here
     }
     ))
   }
@@ -37,8 +36,6 @@ class App extends Component {
   }
   
   render() {
-    console.log('render');
-
     //optimization not to call "this.xxx. or this."
     const { characters, searchField } = this.state;
     const { onSearchChange } = this;
@@ -53,16 +50,10 @@ class App extends Component {
         <input className="search-box" 
         type="search" 
         placeholder="search characters" 
-        onChange={this.onSearchChange} />
-        {
-          filteredCharacters.map((character) => {
-            return (
-              <div key={character.id}>
-                <h1>{character.name}</h1>
-              </div>
-            );
-          })
-        }
+        onChange={this.onSearchChange} 
+        />
+        <CardList characters={filteredCharacters}/>
+
       </div>
     ); 
   }
